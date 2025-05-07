@@ -13,46 +13,48 @@ const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
 // YouTube Channels
 const CHANNELS = [
-'UCNQAoLEv87L7NgUp4We3HIg', // CRAZY GREAPA 
-'UCuZBxbwknYtE30Qdh0dQ1Tg', // Jacksinfo 
-'UC_485Ao_SxlCaBlOZORVsVQ', // Zdak
-'UC7zQcu8FeM_RmUJmwJmCh7w', // UrBoyTrev206
-'UCNlDLIic5wnXmScZYjXBrjg', // Catalyst
-'UCBaJVMx5fcWOHsmPH3IxKKQ', // Wubzzy
-'UCYGElWL8dYqreUh9wNb3s2A', // Vines Best Laugh 
-'UC2bxGXFgyCS73exzJ_i0zww', // 	Nba Rich
-'UCbv_WFkthQxrqRVwLAcRT_Q', // Phenomenon EditZ
-'UCfF7GECIz-rj74KMh9S4ilg', // MiAnimation
-'UCUnmH8N8k4E7y3dKfCzDKKg', // Brandon B
-'UCoJ5osZ535ar2kzHwQMnLsA', // Double Date 
-'UCefnOSmxkOzKR3aUdxgVnsQ', // Marulho
-'UCQOidFKQBMvLXk7PxGBXWyA', // The Gabriels
-'UCYCh5_-In6wtzWR-s_kM03w', // HT Official
-'UCym7PDoe2kcT_Z30LQyGy1w', // SIXPATHSSS
-'UCq45uL90wzglh4JTSn34YZQ', // MoniLinaFamily
-'UCvLHvyLxBwHKAEx5u09vqVw', // Jehiely N Alex
-'UCymK_3BWUcoYVVf5D_GmACQ', // Tsuriki Show
-'UCjdrGjv4bGt5HvApBe1HADQ', // ElegantBeautybyBritt
-'UCcQ18ScARDXR0hf-OMQofsw', // ox_zung 
-'UCSYuOoOUKFA3eZ0L8sRXSTQ', //wish SA 
-'UCJadYQZAbzhNweKK621hVQg', // Sósia do Vini Jr
-'UCYXrKtLb_uC8vlvalVgef3Q', // Shon Edit
-'UCgDBOyrroHE07kPmeA-Ukyw', // Anne P
-'UCSn-PqF7wU5gXJRpck4ZQIA', // Peter Nguyen
-'UCiLjzcRKUqk0IMxhzyyYFyQ', // Wars JR
-'UCpCLsVt-9LhvDKvEzE7Kw7A', // Bridon Production LLC Seany Tv
-'UCtH7B4OprU9bUYA0xknelng', // LiveRankings
-'UCCfKlFlKYBxZ-UU2dWc17IQ', // boxtoxtv
-'UCuj-Tt5acrmGbujvRxVv9Fg', // DOVE CLUBB
-'UC77xNOzWNYsS8dP2HSkjEEw', //FARUKKHANCR7
-'UCQR0MYr5hvRlWIkrRNZ_mLg', // Laugh Hub
-'UCYwi1YamkmM9zsm_k27iC_Q', // Tokyo_boy 
-'UCtjYtFpwvLoy9gt1GDK2klg', // Kristen Hanby
-'UCEr55381WIqO1w_IzgcI5DQ', // Anwar Jibawi
-'UCV4uuw1QDPhoiyweotfA5rw', // AdamW
-'UC82rNcKjcMnllk_P2cxheJw', // Bebahan
-'UCb9A6uotqUiuVCvVp4GMqOg', // Justin Flom
-'UCwmGHKwW6AE_NBQ3CNcO9-A'  // Oscars Funny World
+'UCbCmjCuTUZos6Inko4u57UQ', // Cocomelon - Nursery Rhymes
+'UCpEhnqL0y41EpW2TvWAHD7Q', // SET India
+'UCbp9MyKCTEww4CxEzc_Tp0Q', //Stokes Twins
+'UCJ5v_MCY6GNUBTO8-D3XoAg', // WWE 
+'UCyoXW-Dse7fURq30EWl_CUA', // Goldmines
+'UCiVs2pnGW5mLIc1jS2nxhjg', // 김프로KIMPRO
+'UC6-F5tO8uklgE9Zy8IvbdFw', // Sony SAB
+'UCOmHUn--16B90oW2L6FRR3A', //BLACKPINK
+'UC5gxP-2QqIh_09djvlm9Xcg', // Alan's Universe
+'UCRijo3ddMTht_IHyNSNXpNQ', //Dude Perfect
+'UC295-Dw_tDNtZXFeAPAW6Aw', // 5Minute Crafts  
+'UC3gNmTGu-TTbFPpfSs5kNkg', // Movieclips 
+'UC9CoOnJkIBMdeijd9qYoT_g', // Ariana Grande
+'UC0C-w0YjGpqDXGB8IHb662A', // Ed Sheeran 
+'UCIwFjwMjI0y7PDBVEO9-bkQ', // Justin Bieber
+'UCEdvpU2pFRCVqU6yIPyTpMQ', // Marshmello
+'UCfM3zsQsOnfWNUppiycmBuw', // EminemMusic
+'UC2tsySbe9TNrI-xh2lximHA', // A4
+'UCWrmbQy_KxoBTAHCU7HiErg', // ARGEN
+'UCZFBnnCCO65xMXOdtFz8CfA', // Sofi Manassyan 
+'UCf07_zJEZAfr8vPof-2cjTQ', // FlashPass
+'UCUcfej7lPDoeqTlferD2mcw', // Czn Burak
+'UC2J3OlDA_lvVylS4nWy26fw', // NOTSR7
+'UCHCbPLCd3nEAlNl2C55rsJg', // Date With Gym
+'UC2-MyyXdijbIFiUYQlMit8w', // bonnii
+'UCbH8ThM1Mkr19tl4tDOTDDQ', // BroxEditZ
+'UCKGyZt16D8aztPPqMwwemxA', // Cars911
+'UCiV4OPgaUfwX3HvktO9YPtA', // Foodie Mama 
+'UCFBPLzH1iphF9fy-52DYzAg', // Chocodogger
+'UCDeH8IeKqvzn8x_iZPAuIfA', // mreviatar
+'UCcAoZZkCKvoqSJmVbRaSsDg', // Роман Magic
+'UCSbKI3s_8tg3KeQ4R4_6c6g', // Linguini
+'UCvoNmw8SGGBVMtSgiQSZK2Q', // mister bombastic
+'UC9u3v8d3eSKHLgre8PgUV6A', // BuzzGo
+'UCX6r4rkU7Js0HTWDPLTl1dg', // Respect 100M
+'UCxnOf_DD412wLKhjgqTt9Mw', // Valerie Lungu
+'UCjJ07jOCA8TsqOCtD2324WQ', // Txmshorts
+'UC6NJVNuibWilqOTeNCWZVIg', // Hoanftbl
+'UCeP5A8YIEQ61tFiav8vzJDg', // narchooo
+'UCYRrP22txtZdPr7t2IxkR9w', // Ironaldox
+'UC1a2ZCw7tugRZYRMnecNj3A'  // Celine Dept
+ 
 ];
 
 // Initialize Firebase
