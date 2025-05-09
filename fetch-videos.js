@@ -39,7 +39,7 @@ const CHANNELS = [
     'UCFBPLzH1iphF9fy-52DYzAg', // Chocodogger
     'UCDeH8IeKqvzn8x_iZPAuIfA', // mreviatar
     'UCcAoZZkCKvoqSJmVbRaSsDg', // Роман Magic
-    'UCSbKI3s_8tg3KeQ4R4_6c6g', // Linguini
+    'UCSbKI3s8tg3KeQ4R46c6g', // Linguini
     'UCvoNmw8SGGBVMtSgiQSZK2Q', // mister bombastic
     'UC9u3v8d3eSKHLgre8PgUV6A', // BuzzGo
     'UCX6r4rkU7Js0HTWDPLTl1dg', // Respect 100M
@@ -145,7 +145,7 @@ async function getLatestVideoId(channelId) {
         `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}` +
         `&channelId=${channelId}&part=snippet&order=date` +
         `&maxResults=1&type=video&videoDuration=short` +
-        `&fields=items(id(videoId))`
+        `&fields=items(id(videoId),snippet(title))`
     );
 
     return response.data.items[0]?.id.videoId;
@@ -160,27 +160,95 @@ async function getVideoDetails(videoId) {
     const response = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}` +
         `&id=${videoId}&part=snippet,contentDetails,statistics` +
-        `&fields=items(snippet(title,thumbnails/high,channelId),contentDetails/duration,statistics)`
+        `&fields=items(snippet(title,description,thumbnails/high,channelId),contentDetails/duration,statistics)`
     );
 
     const item = response.data.items[0];
     if (!item) return null;
 
-    if (parseDuration(item.contentDetails.duration) > 180) return null;
+    const duration = parseDuration(item.contentDetails.duration);
+    if (duration > 180) return null;
 
     const channelInfo = await getChannelInfo(item.snippet.channelId);
-
+    
+    // Extract music information from description
+    const musicInfo = extractMusicInfo(item.snippet.description);
+    
     return {
         videoId,
         title: item.snippet.title,
+        description: item.snippet.description,
         thumbnail: item.snippet.thumbnails.high.url,
         duration: item.contentDetails.duration,
+        durationSeconds: duration,
         creatorUsername: channelInfo.title,
         creatorAvatar: channelInfo.avatar,
         isVerified: channelInfo.isVerified,
         likes: parseInt(item.statistics?.likeCount || 0),
         comments: parseInt(item.statistics?.commentCount || 0),
-        isAI: true
+        music: musicInfo,
+        isAI: true,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+    };
+}
+
+function extractMusicInfo(description) {
+    // Patterns to detect music information
+    const patterns = [
+        /Music in this video[\s\S]*?Learn more[\s\S]*?Song\s*(.*?)\s*Artist\s*(.*?)\s*Licensed to YouTube by/i,
+        /🎵 Music[\s:]*([^\n]*)/i,
+        /Track:?\s*(.*?)\s*by\s*(.*?)(?:\n|$)/i,
+        /Song:?\s*(.*?)(?:\n|$)/i,
+        /Sound:?\s*(.*?)(?:\n|$)/i,
+        /Original sound - (.*)/i
+    ];
+
+    for (const pattern of patterns) {
+        const match = description.match(pattern);
+        if (match) {
+            if (match[1] && match[2]) {
+                return {
+                    type: 'youtube_music',
+                    song: match[1].trim(),
+                    artist: match[2].trim(),
+                    isOriginal: false
+                };
+            } else if (match[1]) {
+                return {
+                    type: match[0].includes('Original sound') ? 'original_sound' : 'unknown_music',
+                    song: match[1].trim(),
+                    artist: null,
+                    isOriginal: match[0].includes('Original sound')
+                };
+            }
+        }
+    }
+
+    // Check for common music tags
+    if (description.includes('epidemicsound') || description.includes('Epidemic Sound')) {
+        return {
+            type: 'epidemic_sound',
+            song: null,
+            artist: null,
+            isOriginal: false
+        };
+    }
+
+    if (description.includes('No copyright music') || description.includes('NCS')) {
+        return {
+            type: 'no_copyright_sound',
+            song: null,
+            artist: null,
+            isOriginal: false
+        };
+    }
+
+    // Default to original sound if no music info found
+    return {
+        type: 'original_sound',
+        song: null,
+        artist: null,
+        isOriginal: true
     };
 }
 
@@ -208,11 +276,10 @@ async function getChannelInfo(channelId) {
 
 async function saveVideos(videos) {
     const batch = db.batch();
-    const now = admin.firestore.FieldValue.serverTimestamp();
     
     videos.forEach(video => {
         const ref = db.collection('videos').doc(video.videoId);
-        batch.set(ref, { ...video, timestamp: now });
+        batch.set(ref, video);
     });
     
     await batch.commit();
